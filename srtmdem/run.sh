@@ -49,7 +49,7 @@ do
   lon=`echo $pts | cut -d " " -f 1`
   lat=`echo $pts | cut -d " " -f 2`
   
-  SRTM.py $lat $lon $TMPDIR/dem -D /application/srtmdem/data $option -s
+  SRTM.py $lat $lon $TMPDIR/dem -D /application/SRTM/data $option -s
   
   ciop-publish -M dem*
   
