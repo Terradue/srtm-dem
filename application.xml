@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="beam_arithm">
+<jobTemplates>
+<jobTemplate id="srtmdem">
+<streamingExecutable>/application/srtmdem/run.sh</streamingExecutable>
+<defaultParameters>
+<parameter id="format" title="Format of the generated DEM (roi_pac or gamma)" abstract="aa" scope="runtime" type="LiteralData">roi_pac</parameter>
+</defaultParameters>
+<defaultJobconf>
+<property id="mapred.task.timeout">9900000000000</property>
+</defaultJobconf>
+</jobTemplate>
+ <workflow id="srtmdem" title="SRTM Digital Elevation Model" abstract="This application generates the STRM DEM in ROI_PAC or GAMMA ready format">
+<workflowVersion>1.0</workflowVersion>
+<node id="node_expression">
+<job id="expression" />
+<sources>
+<source id="Level0_ref" title="SAR product catalogue entry(ies) in RDF format" abstract="Define the list of one or more SAR products to generate a DEM for each input product. The products are passed by references to catalogue entries in RDF format" refid="string:list" scope="runtime">http://eo-virtual-archive4.esa.int/search/ASA_IM__0P/ASA_IM__0CNPAM20100818_204734_000000172092_00129_44271_5241.N1/rdf</source>
+</sources>
+<parameters>
+</parameters>
+</node>
+ </workflow>
+</application>
