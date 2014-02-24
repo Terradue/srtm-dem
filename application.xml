@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="us-ascii"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="beam_arithm">
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="srtmdem">
 <jobTemplates>
 <jobTemplate id="srtmdem">
 <streamingExecutable>/application/srtmdem/run.sh</streamingExecutable>
@@ -10,6 +10,7 @@
 <property id="mapred.task.timeout">9900000000000</property>
 </defaultJobconf>
 </jobTemplate>
+</jobTemplates>
  <workflow id="srtmdem" title="SRTM Digital Elevation Model" abstract="This application generates the STRM DEM in ROI_PAC or GAMMA ready format">
 <workflowVersion>1.0</workflowVersion>
 <node id="node_srtmdem">
