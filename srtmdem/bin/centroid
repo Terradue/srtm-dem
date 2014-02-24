@@ -1,0 +1,14 @@
+#!/usr/bin/Rscript --vanilla --slave --quiet
+
+library("rciop")
+suppressMessages(library(rgeos))
+
+args <- commandArgs(trailingOnly = TRUE)
+
+dataset <- args[1]
+
+wkt <- rciop.casmeta("dct:spatial", dataset)$output
+
+centroid <- gCentroid(readWKT(wkt[1]))
+
+cat(paste(centroid@coords[1], centroid@coords[2], sep=" "))
