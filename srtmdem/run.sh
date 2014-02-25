@@ -57,7 +57,7 @@ do
 
   # use the dataset identifier as filename for the result
   # SRTM.py concatenates .dem.<extension>
-  ciop-log "INFO" "`basename $pts` centroid is ($lon $lat)" 
+  ciop-log "INFO" "`basename $inputfile` centroid is ($lon $lat)" 
   dem_name=`ciop-casmeta -f "dc:identifier" $inputfile`
   [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
  
