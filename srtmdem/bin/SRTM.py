@@ -255,6 +255,7 @@ def get_dem_files(dem_files):
   dems = []
   for dem in dem_files:
     dems = dems +[SRTM(D+dem)]
+    print(D+dem)
   return dems
   
 def get_dems_extent(dems):
@@ -284,3 +285,62 @@ def mk_srtm(outfile,lat,lon,M='ftp',D='./'):
   
   
 
+if __name__=="__main__":
+  print " ****** Mosaic SRTM DEM ******"
+  try:
+    opts,args = getopt.gnu_getopt(sys.argv[3:],'ghsM:D:')
+  except getopt.error, err:
+    print str(err)
+    usage()
+  opts = dict(opts)
+  args
+  if '-h' in opts: usage()
+  try:
+    outfile = args[0]
+  except IndexError:
+    print "Error: no output name"
+    usage()
+  try:
+    lat = float(sys.argv[1])
+  except IndexError:
+    print "Error: no latitude value"
+    usage()
+  try:
+    lon = float(sys.argv[2])
+  except IndexError:
+    print "Error: no longitude value"
+    usage() 
+  if lat>90 or lat<-90:
+    print "Latitude should be in range -90:90"
+    usage()
+  if lon>180 or lon<-180:
+    print "Longitude should be in range -180:180"
+    usage()       
+  if '-M' in opts:
+    M = opts['-M']
+  else:
+    M = 'ftp'
+  if '-D' in opts:
+    D = opts['-D']
+  else:
+    D = './'  
+  srtm = mk_srtm(outfile,lat,lon,M,D) 
+  if '-s' in opts:
+    print "\tSaving to jpg image..."
+    srtm.imsave()
+    print "\tShowing "+srtm.name+".dem.jpg"
+  if '-g' in opts:
+    print "\tSaving "+srtm.name+".dem to Gamma format..."
+    srtm.data = srtm.data.astype(float32)
+    if sys.byteorder=='little':
+      srtm.data = srtm.data.byteswap().astype(float32)
+      srtm.byteorder = 'big'
+    srtm.gamma_header()
+  else:
+    print "\tSaving "+srtm.name+".dem to ROI-PAC format..."
+    srtm.data = srtm.data.astype(int16)
+    srtm.roi_header()
+  srtm.save_SRTM()  
+
+  
+  

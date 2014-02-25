@@ -28,6 +28,10 @@ exit $retval
 trap cleanExit EXIT
  
 export PATH=/application/srtmdem/bin:$PATH 
+
+export DISPLAY=:1.0
+
+export MPLCONFIGDIR=/tmp/ #.matplotlib
  
 # retrieve the parameters value from workflow or job default value
 format="`ciop-getparam format`"
@@ -42,16 +46,23 @@ case $format in
 esac
 
 cd $TMPDIR
-
+set -x
 while read inputfile
 do
   pts=`centroid $inputfile`
   lon=`echo $pts | cut -d " " -f 1`
   lat=`echo $pts | cut -d " " -f 2`
-  
-  SRTM.py $lat $lon $TMPDIR/dem -D /application/SRTM/data $option -s
-  
-  ciop-publish -M dem*
-  
-  rm -fr dem*
+
+  ciop-log "INFO" "`basename $pts` centroid is ($lon $lat)" 
+  dem=`ciop-casmeta -f "dc:identifier" $inputfile`
+ 
+  ciop-log "INFO" "Generating DEM"
+  SRTM.py $lat $lon $TMPDIR/$dem -D /application/SRTM/data/ $option
+
+  ciop-log "INFO" "Compressing DEM"
+  tar cfz $dem.dem.tgz $dem*   
+
+  ciop-log "INFO" "Publishing results"
+  ciop-publish -m $TMPDIR/$dem.dem.tgz #$TMPDIR 
+  rm -fr $dem*
 done
