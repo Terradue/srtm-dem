@@ -64,7 +64,7 @@ do
   # invoke the SRTM.py
   # the folder /application/SRTM/data contains the SRTM tiles in tif format
   ciop-log "INFO" "Generating DEM"
-  SRTM.py $lat $lon $TMPDIR/$dem_name -D /application/SRTM/data/ $option 1>&2
+  SRTM.py $lat $lon $TMPDIR/$dem_name -D /application/cas/data/ $option 1>&2
 
   # check the output
   [ ! -e $TMPDIR/$dem_name.dem ] && exit $ERR_NODEM
