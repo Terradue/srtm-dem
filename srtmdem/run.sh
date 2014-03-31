@@ -41,6 +41,8 @@ case $format in
     option="";;
   gamma)
     option="-g";;
+  gmtsar)
+    flag="true";;
   *)
     exit $ERR_INVALIDFORMAT;;
 esac
@@ -50,33 +52,41 @@ cd $TMPDIR
 # read the catalogue reference to the dataset
 while read inputfile
 do
-  # the centroid R script get the WKT footprint and calculates the geometry centroid
-  pts=`centroid $inputfile`
-  lon=`echo $pts | cut -d " " -f 1`
-  lat=`echo $pts | cut -d " " -f 2`
+  # GMTSAR
+  [ $flag == "true" ] && {
+   # invoke make_dem.csh
+   
+  } || {
 
-  # use the dataset identifier as filename for the result
-  # SRTM.py concatenates .dem.<extension>
-  ciop-log "INFO" "`basename $inputfile` centroid is ($lon $lat)" 
-  dem_name=`ciop-casmeta -f "dc:identifier" $inputfile`
-  [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
+   # the centroid R script get the WKT footprint and calculates the geometry centroid
+   pts=`centroid $inputfile`
+   lon=`echo $pts | cut -d " " -f 1`
+   lat=`echo $pts | cut -d " " -f 2`
  
-  # invoke the SRTM.py
-  # the folder /application/SRTM/data contains the SRTM tiles in tif format
-  ciop-log "INFO" "Generating DEM"
-  SRTM.py $lat $lon $TMPDIR/$dem_name -D /application/cas/data/ $option 1>&2
-
-  # check the output
-  [ ! -e $TMPDIR/$dem_name.dem ] && exit $ERR_NODEM
-
-  # save the bandwidth 
-  ciop-log "INFO" "Compressing DEM"
-  tar cfz $dem_name.dem.tgz $dem_name*   
-
-  # have the compressed archive published and its reference exposed as metalink
-  ciop-log "INFO" "Publishing results"
-  ciop-publish -m $TMPDIR/$dem_name.dem.tgz  
+   # use the dataset identifier as filename for the result
+   # SRTM.py concatenates .dem.<extension>
+   ciop-log "INFO" "`basename $inputfile` centroid is ($lon $lat)" 
+   dem_name=`ciop-casmeta -f "dc:identifier" $inputfile`
+   [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
   
-  # clean-up for the next dataset reference
-  rm -fr $dem_name*
+   # invoke the SRTM.py
+   # the folder /application/SRTM/data contains the SRTM tiles in tif format
+   ciop-log "INFO" "Generating DEM"
+   SRTM.py $lat $lon $TMPDIR/$dem_name -D /application/cas/data/ $option 1>&2
+ 
+   # check the output
+   [ ! -e $TMPDIR/$dem_name.dem ] && exit $ERR_NODEM
+ 
+   # save the bandwidth 
+   ciop-log "INFO" "Compressing DEM"
+   tar cfz $dem_name.dem.tgz $dem_name*   
+ 
+   # have the compressed archive published and its reference exposed as metalink
+   ciop-log "INFO" "Publishing results"
+   ciop-publish -m $TMPDIR/$dem_name.dem.tgz  
+   
+   # clean-up for the next dataset reference
+   rm -fr $dem_name*
+   
+  }
 done
