@@ -55,7 +55,7 @@ do
   # GMTSAR
   [ $flag == "true" ] && {
    # invoke make_dem.csh
-   
+    #/usr/local/gmtsar/csh/make_dem.csh <coordinates> <dem type> <path>
   } || {
 
    # the centroid R script get the WKT footprint and calculates the geometry centroid
