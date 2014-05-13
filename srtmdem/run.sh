@@ -52,17 +52,23 @@ cd $TMPDIR
 # read the catalogue reference to the dataset
 while read inputfile
 do
-  # GMTSAR
-  [ $flag == "true" ] && {
-   # invoke make_dem.csh
-    #/usr/local/gmtsar/csh/make_dem.csh <coordinates> <dem type> <path>
-  } || {
-
    # the centroid R script get the WKT footprint and calculates the geometry centroid
    pts=`centroid $inputfile`
    lon=`echo $pts | cut -d " " -f 1`
    lat=`echo $pts | cut -d " " -f 2`
- 
+
+  # GMTSAR
+  [ $flag == "true" ] && {
+   # invoke make_dem.csh
+   #recreate a 5 deg bbox around the centroid lon/lat
+    lon1=$( echo "$lon - 2.5" | bc ) 
+    lon2=$( echo "$lon + 2.5" | bc )
+    lat1=$( echo "$lat - 2.5" | bc )
+    lat2=$( echo "$lat + 2.5" | bc )
+    ciop-log "INFO" "using GMTSAR with coords $lon1 $lon2 $lat1 $lat2"
+    /usr/local/gmtsar/csh/make_dem.csh $lon1 $lon2 $lat1 $lat2 2 /data/SRTM3/World/
+  } || {
+
    # use the dataset identifier as filename for the result
    # SRTM.py concatenates .dem.<extension>
    ciop-log "INFO" "`basename $inputfile` centroid is ($lon $lat)" 
