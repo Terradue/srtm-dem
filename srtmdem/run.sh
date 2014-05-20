@@ -41,6 +41,8 @@ case $format in
     option="";;
   gamma)
     option="-g";;
+  gmtsar)
+    flag="true";;
   *)
     exit $ERR_INVALIDFORMAT;;
 esac
@@ -50,21 +52,44 @@ cd $TMPDIR
 # read the catalogue reference to the dataset
 while read inputfile
 do
-  # the centroid R script get the WKT footprint and calculates the geometry centroid
-  pts=`centroid $inputfile`
-  lon=`echo $pts | cut -d " " -f 1`
-  lat=`echo $pts | cut -d " " -f 2`
+   ciop-log "INFO" "`basename $inputfile` centroid is ($lon $lat)" 
+   dem_name=`ciop-casmeta -f "dc:identifier" $inputfile`
+   [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
 
-  # use the dataset identifier as filename for the result
-  # SRTM.py concatenates .dem.<extension>
-  ciop-log "INFO" "`basename $inputfile` centroid is ($lon $lat)" 
-  dem_name=`ciop-casmeta -f "dc:identifier" $inputfile`
-  [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
- 
-  # invoke the SRTM.py
-  # the folder /application/SRTM/data contains the SRTM tiles in tif format
-  ciop-log "INFO" "Generating DEM"
-  SRTM.py $lat $lon $TMPDIR/$dem_name -D /application/cas/data/ $option 1>&2
+   # the centroid R script get the WKT footprint and calculates the geometry centroid
+   pts=`centroid $inputfile`
+   lon=`echo $pts | cut -d " " -f 1`
+   lat=`echo $pts | cut -d " " -f 2`
+
+  # GMTSAR
+  [ $flag == "true" ] && {
+   # invoke make_dem.csh
+   #recreate a 3 deg bbox around the centroid lon/lat
+    lon1=$( echo "$lon - 1.5" | bc ) 
+    lon2=$( echo "$lon + 1.5" | bc )
+    lat1=$( echo "$lat - 1.5" | bc )
+    lat2=$( echo "$lat + 1.5" | bc )
+    ciop-log "INFO" "using GMTSAR with coords $lon1 $lon2 $lat1 $lat2"
+
+    cd $TMPDIR
+    export PATH=$PATH:/usr/local/GMTSAR/gmtsar/csh/
+    /usr/local/GMTSAR/gmtsar/csh/make_dem.csh $lon1 $lon2 $lat1 $lat2 2 /data/SRTM3/World/
+    
+    #rename the output
+    mv dem.grd $dem_name.dem
+    mv dem_grad.png $dem_name.png
+    mv dem_grad.kml $dem_name.kml
+    
+  } || {
+
+   # use the dataset identifier as filename for the result
+   # SRTM.py concatenates .dem.<extension>
+
+   # invoke the SRTM.py
+   # the folder /application/SRTM/data contains the SRTM tiles in tif format
+   ciop-log "INFO" "Generating DEM"
+   SRTM.py $lat $lon $TMPDIR/$dem_name -D /data/SRTM41/ $option 1>&2
+  } 
 
   # check the output
   [ ! -e $TMPDIR/$dem_name.dem ] && exit $ERR_NODEM
@@ -72,11 +97,12 @@ do
   # save the bandwidth 
   ciop-log "INFO" "Compressing DEM"
   tar cfz $dem_name.dem.tgz $dem_name*   
-
+ 
   # have the compressed archive published and its reference exposed as metalink
   ciop-log "INFO" "Publishing results"
   ciop-publish -m $TMPDIR/$dem_name.dem.tgz  
-  
+   
   # clean-up for the next dataset reference
   rm -fr $dem_name*
+   
 done
