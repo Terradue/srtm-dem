@@ -26,6 +26,8 @@ exit $retval
 }
 trap cleanExit EXIT
  
+set -x
+
 export PATH=/application/srtmdem/bin:$PATH 
 
 export DISPLAY=:1.0
@@ -52,12 +54,12 @@ cd $TMPDIR
 # read the catalogue reference to the dataset
 while read inputfile
 do
-   ciop-log "INFO" "`basename $inputfile` centroid is ($lon $lat)" 
-   dem_name=`ciop-casmeta -f "dc:identifier" $inputfile`
+   ciop-log "INFO" "`basename "$inputfile"` centroid is ($lon $lat)" 
+   dem_name=`ciop-casmeta -f "dc:identifier" "$inputfile"`
    [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
 
    # the centroid R script get the WKT footprint and calculates the geometry centroid
-   pts=`centroid $inputfile`
+   pts=`centroid "$inputfile"`
    lon=`echo $pts | cut -d " " -f 1`
    lat=`echo $pts | cut -d " " -f 2`
 
