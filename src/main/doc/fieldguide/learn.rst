@@ -1,19 +1,16 @@
 What you will learn
 ===================
 
-With this field guide application, you will learn:
+With this field guide application, you will learn to create a Web Processing Service (WPS) for the generation of a Digital Elevation Model taking as input a reference to a SAR product catalogue entry.
 
-1. To manage test data in a sandbox - you will copy the USGS Landsat sample products, convert them into the ERDAS image format, copy them to S3 and register them in the sandbox catalogue
-2. To create a simple application - you will implement a Python module and test it against the registered Landsat data
-3. To test the application - you will execute the processing step and inspect the results and will execute the workflow
-4. To exploit the application - you will use the Web Processing Service (WPS) interface to invoke the application
+The SAR product catalogue entry contains the geographical area covered and this information is used to stich SRTM tiles together extending the geographical area half degree in all directions.
 
 Where is the code
 +++++++++++++++++
 
-The code for this tutorial is available on GitHub repository `Developer Cloud Sandbox Python tutorial - Landsat NDVI <https://github.com/Terradue/dcs-python-ndvi>`_.
+The code for this tutorial is available on GitHub repository `Developer Cloud Sandbox SRTM DEM generation <https://github.com/Terradue/strm-dem>`_.
 
-To deploy the tutorial on a Developer Sandbox:
+To deploy the application on a Developer Sandbox:
 
 .. code-block:: console
 
@@ -22,11 +19,9 @@ To deploy the tutorial on a Developer Sandbox:
   cd srtm-dem
   mvn install
   
-This will:
+This will copy the application resources on the /application volume.
 
-* copy the application resources on the /application volume.
-
-The code can be modified (e.g. to support Landsat 8) by forking the repository here: `<https://github.com/Terradue/srtm-dem/fork>`_
+The code can be modified (e.g. to support other DEM) by forking the repository here: `<https://github.com/Terradue/srtm-dem/fork>`_
 
 Questions, bugs, and suggestions
 ++++++++++++++++++++++++++++++++
