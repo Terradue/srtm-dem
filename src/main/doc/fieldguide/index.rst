@@ -5,6 +5,8 @@ Digital Elevation Model (DEM) are mandatory inputs for several applications such
 
 This field guide uses the Developer Cloud Sandbox service to implement an auxilary service to generate DEM taking as input a reference to a SAR product catalogue entry.
 
+This work reuses parts of the approach found here: `<http://rnovitsky.blogspot.it/2009/05/howto-create-dem-for-roi-pac-processing.html>`_. We thank `Ran Novitsky Nof <http://www.blogger.com/profile/13547751431352852077>`_ for that! 
+
 Contents:
 
 .. toctree::
