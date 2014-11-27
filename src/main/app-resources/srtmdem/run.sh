@@ -81,6 +81,7 @@ do
     mv dem.grd $dem_name.grd
     mv dem_grad.png $dem_name.png
     mv dem_grad.kml $dem_name.kml
+    [ ! -e $TMPDIR/$dem_name.grd ] && exit $ERR_NODEM
     
   } || {
 
@@ -91,10 +92,8 @@ do
    # the folder /application/SRTM/data contains the SRTM tiles in tif format
    ciop-log "INFO" "Generating DEM"
    SRTM.py $lat $lon $TMPDIR/$dem_name -D /data/SRTM41/ $option 1>&2
+   [ ! -e $TMPDIR/$dem_name.dem ] && exit $ERR_NODEM
   } 
-
-  # check the output
-  [ ! -e $TMPDIR/$dem_name.dem ] && exit $ERR_NODEM
 
   # save the bandwidth 
   ciop-log "INFO" "Compressing DEM"
