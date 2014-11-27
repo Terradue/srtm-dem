@@ -78,7 +78,7 @@ do
     /usr/local/GMTSAR/gmtsar/csh/make_dem.csh $lon1 $lon2 $lat1 $lat2 2 /data/SRTM3/World/
     
     #rename the output
-    mv dem.grd $dem_name.dem
+    mv dem.grd $dem_name.grd
     mv dem_grad.png $dem_name.png
     mv dem_grad.kml $dem_name.kml
     
