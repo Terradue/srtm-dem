@@ -31,9 +31,6 @@ export PATH=/application/srtmdem/bin:$PATH
 
 export DISPLAY=:1.0
 
-# SRTM.py uses matplotlib, set a temporary directory
-export MPLCONFIGDIR=$UUIDTMP/
- 
 # retrieve the DEM format to generate
 format="`ciop-getparam format`"
 
@@ -55,6 +52,9 @@ do
    mkdir $UUIDTMP
    cd $UUIDTMP
 
+   # SRTM.py uses matplotlib, set a temporary directory
+   export MPLCONFIGDIR=$UUIDTMP/
+
    ciop-log "INFO" "Working on $inputfile in $UUIDTMP" 
 
    dem_name=`ciop-casmeta -f "dc:identifier" "$inputfile"`
@@ -66,7 +66,7 @@ do
    lat=`echo $pts | cut -d " " -f 2`
 
   # GMTSAR
-  [ $flag == "true" ] && {
+  [ "$flag" == "true" ] && {
     # invoke make_dem.csh
 
 #   #recreate a 3 deg bbox around the centroid lon/lat
