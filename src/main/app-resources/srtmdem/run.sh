@@ -1,5 +1,5 @@
 #!/bin/bash
-
+ 
 # source the ciop functions (e.g. ciop-log)
 source ${ciop_job_include}
 
@@ -25,9 +25,9 @@ esac
 exit $retval
 }
 trap cleanExit EXIT
+ 
 
-
-export PATH=/application/srtmdem/bin:$PATH
+export PATH=/application/srtmdem/bin:$PATH 
 
 export DISPLAY=:1.0
 
@@ -60,11 +60,11 @@ do
    # SRTM.py uses matplotlib, set a temporary directory
    export MPLCONFIGDIR=$UUIDTMP/
 
-   ciop-log "INFO" "Working on $inputfile in $UUIDTMP"
+   ciop-log "INFO" "Working on $inputfile in $UUIDTMP" 
 
    #dem_name=`ciop-casmeta -f "dc:identifier" "$inputfile"`
    dem_name=`uuidgen`
-   [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER
+   [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
 
    wkt="$( opensearch-client "$inputfile" wkt | tail -1 )"
    ciop-log "DEBUG" "wkt is $wkt"
@@ -72,13 +72,13 @@ do
    pts=`centroid "$wkt"`
    lon=`echo $pts | cut -d " " -f 1`
    lat=`echo $pts | cut -d " " -f 2`
- ciop-log "DEBUG" "centroid finished"
+   ciop-log "DEBUG" "centroid finished"
   # GMTSAR
   [ "$flag" == "true" ] && {
     # invoke make_dem.csh
 
 #   #recreate a 3 deg bbox around the centroid lon/lat
-#    lon1=$( echo "$lon - 1.5" | bc )
+#    lon1=$( echo "$lon - 1.5" | bc ) 
 #    lon2=$( echo "$lon + 1.5" | bc )
 #    lat1=$( echo "$lat - 1.5" | bc )
 #    lat2=$( echo "$lat + 1.5" | bc )
@@ -94,13 +94,13 @@ do
 
     export PATH=$PATH:/usr/local/GMTSAR/gmtsar/csh/
     /usr/local/GMTSAR/gmtsar/csh/make_dem.csh $lon1 $lon2 $lat1 $lat2 2 /data/SRTM3/World/
-
+    
     #rename the output
     #mv dem.grd $dem_name.grd
     #mv dem_grad.png $dem_name.png
     #mv dem_grad.kml $dem_name.kml
     [ ! -e $UUIDTMP/dem.grd ] && exit $ERR_NODEM
-
+    
      # save the bandwidth
      ciop-log "INFO" "Compressing DEM"
      tar cfz $dem_name.dem.tgz dem*
@@ -115,17 +115,17 @@ do
    ciop-log "INFO" "Generating DEM"
    SRTM.py $lat $lon $UUIDTMP/$dem_name -D /data/SRTM41/ $option 1>&2
    [ ! -e $UUIDTMP/$dem_name.dem ] && exit $ERR_NODEM
-
+  
    # save the bandwidth
    ciop-log "INFO" "Compressing DEM"
    tar cfz $dem_name.dem.tgz $dem_name*
-  }
-
+  } 
+ 
   # have the compressed archive published and its reference exposed as metalink
   ciop-log "INFO" "Publishing results"
-  ciop-publish -m $UUIDTMP/$dem_name.dem.tgz
-
+  ciop-publish -m $UUIDTMP/$dem_name.dem.tgz  
+   
   # clean-up for the next dataset reference
   rm -fr $UUIDTMP
-
+   
 done
