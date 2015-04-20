@@ -138,8 +138,14 @@
           <requires>
             <require>roi_pac</require>
             <require>roi_pac-grdfile</require>
+            <require>pygtk2</require>
+            <require>Xvfb</require>
           </requires>
           <needarch>noarch</needarch>
+          <postinstallScriptlet>
+            <scriptFile>${project.basedir}/src/main/install/postinstall.sh</scriptFile>
+            <fileEncoding>utf-8</fileEncoding>
+          </postinstallScriptlet>
         </configuration>
       </plugin>
       <plugin>
