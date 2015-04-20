@@ -48,7 +48,6 @@ esac
 # read the catalogue reference to the dataset
 while read inputfile
 do
-   printenv
    UUIDTMP="/tmp/`uuidgen`"
    mkdir $UUIDTMP
    cd $UUIDTMP
