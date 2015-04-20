@@ -29,7 +29,7 @@ trap cleanExit EXIT
 
 export PATH=/application/srtmdem/bin:$PATH 
 
-export DISPLAY=:1.0
+export DISPLAY=:99.0
 
 # retrieve the DEM format to generate
 format="`ciop-getparam format`"
