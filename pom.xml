@@ -136,10 +136,11 @@
             <provide>${project.artifactId}</provide>
           </provides>
           <requires>
-            <require>roi_pac</require>
-            <require>roi_pac-grdfile</require>
+            <!-- <require>roi_pac</require>
+            <require>roi_pac-grdfile</require> -->
             <require>pygtk2</require>
             <require>Xvfb</require>
+            <require>GMTSAR</require>
           </requires>
           <needarch>noarch</needarch>
           <postinstallScriptlet>
