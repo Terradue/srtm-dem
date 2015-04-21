@@ -5,6 +5,8 @@
 
 
 import Image,sys,os,glob,getopt,scipy.misc,time
+import matplotlib
+matplotlib.use('agg') 
 from pylab import *
 from string import join
 
