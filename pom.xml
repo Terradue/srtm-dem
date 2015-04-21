@@ -144,6 +144,7 @@
             <require>pygtk2</require>
             <require>python-matplotlib</require>
             <require>python-imaging</require>
+            <require>rciop</require>
           </requires>
           <needarch>noarch</needarch>
           <postinstallScriptlet>

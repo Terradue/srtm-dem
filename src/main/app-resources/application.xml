@@ -4,7 +4,7 @@
     <jobTemplate id="srtmdem">
       <streamingExecutable>/application/srtmdem/run.sh</streamingExecutable>
       <defaultParameters>
-        <parameter id="format" title="Format of the generated DEM (roi_pac or gamma)" abstract="Format of the generated DEM, the value is roi_pac or gamma" scope="runtime" type="LiteralData">gmtsar</parameter>
+        <parameter id="format" title="Format of the generated DEM (roi_pac or gamma)" abstract="Format of the generated DEM, the value is roi_pac or gamma" scope="runtime" type="LiteralData">gamma</parameter>
       </defaultParameters>
       <defaultJobconf>
         <property id="mapred.task.timeout">9900000000</property>
