@@ -1,6 +1,6 @@
 ## SRTM Digital Elevation Model generation
 
-This repository contains the application files and scripts to generates a digital elevation model (DEM) to be used with ROI_PAC, GMTSAR or GAMMA Synthetic Aperture Radar interferometry toolboxes.
+This repository contains the application files and scripts to generate a digital elevation model (DEM) to be used with ROI_PAC, GMTSAR or GAMMA Synthetic Aperture Radar interferometry toolboxes.
 
 ## Quick link
 
@@ -35,6 +35,7 @@ This application requires mounting a volume with the SRTM tiles. This can be req
 ##### Using the releases
 
 Log on the developer cloud sandbox. Download the rpm package from https://github.com/Terradue/srtm-dem/releases.
+
 Install the downloaded package by running these commands in a shell:
 
 ```bash
@@ -64,6 +65,7 @@ Or invoke the Web Processing Service via the Sandbox dashboard or the [Geohazard
 
 http://catalogue.terradue.int/catalogue/search/ASA_IM__0P/ASA_IM__0CNPDE20090412_092426_000000162078_00079_37207_1556.N1/rdf (master)
 
+### <a name="community"></a>Community and Documentation community
 
 To learn more and find information go to
 
