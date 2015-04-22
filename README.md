@@ -46,6 +46,7 @@ sudo yum -y install srtm-dem-<version>-ciop.x86_64.rpm
 Log on the developer sandbox and run these commands in a shell:
 
 ```bash
+sudo yum install numpy scipy Xvfb GMTSAR python-devel pygtk2 python-matplotlib python-imaging rciop
 cd
 git clone git@github.com:Terradue/srtm-dem.git
 git checkout develop
