@@ -12,10 +12,11 @@ args <- commandArgs(trailingOnly = TRUE)
 
 # extract the dct:spatial metadata field (WKT footprint)
 #wkt <- rciop.casmeta("dct:spatial", dataset)$output
+
 wkt <- args[1]
 
 # get the centroid
-centroid <- gCentroid(readWKT(wkt))
+mbr <- gEnvelope(readWKT(wkt))
 
 # print it to the stdout
-cat(paste(centroid@coords[1], centroid@coords[2], sep=" "))
+cat(paste(mbr@bbox[1,1], mbr@bbox[1,2], mbr@bbox[2,1], mbr@bbox[2,2], sep=","))

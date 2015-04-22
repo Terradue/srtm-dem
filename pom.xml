@@ -6,7 +6,7 @@
   <packaging>rpm</packaging>
   <name>srtm-dem</name>
   <description>Digital elevation model generation to use with ROI_PAC, GAMMA and GMTSAR Synthetic Aperture Radar interferometry toolboxes</description>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <scm>
     <connection>scm:git:git@github.com:Terradue/srtm-dem.git</connection>
     <developerConnection>scm:git:git@github.com:Terradue/srtm-dem.git</developerConnection>
@@ -136,10 +136,21 @@
             <provide>${project.artifactId}</provide>
           </provides>
           <requires>
-            <require>roi_pac</require>
-            <require>roi_pac-grdfile</require>
+            <require>numpy</require>
+            <require>scipy</require>
+            <require>Xvfb</require>
+            <require>GMTSAR</require>
+            <require>python-devel</require>
+            <require>pygtk2</require>
+            <require>python-matplotlib</require>
+            <require>python-imaging</require>
+            <require>rciop</require>
           </requires>
           <needarch>noarch</needarch>
+          <postinstallScriptlet>
+            <scriptFile>${project.basedir}/src/main/install/postinstall.sh</scriptFile>
+            <fileEncoding>utf-8</fileEncoding>
+          </postinstallScriptlet>
         </configuration>
       </plugin>
       <plugin>
