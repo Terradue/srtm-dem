@@ -29,7 +29,7 @@ trap cleanExit EXIT
 
 export PATH=/application/srtmdem/bin:$PATH 
 
-export DISPLAY=:1.0
+export DISPLAY=:99.0
 
 # retrieve the DEM format to generate
 format="`ciop-getparam format`"
@@ -52,19 +52,26 @@ do
    mkdir $UUIDTMP
    cd $UUIDTMP
 
+   ciop-log "DEBUG" "inputfile before $inputfile"
+   #inputfile=$( opensearch-client "$inputfile" enclosure | tail -1 )
+   ciop-log "DEBUG" "inputfile after $inputfile"
+
    # SRTM.py uses matplotlib, set a temporary directory
    export MPLCONFIGDIR=$UUIDTMP/
 
    ciop-log "INFO" "Working on $inputfile in $UUIDTMP" 
 
-   dem_name=`ciop-casmeta -f "dc:identifier" "$inputfile"`
+   #dem_name=`ciop-casmeta -f "dc:identifier" "$inputfile"`
+   dem_name=`uuidgen`
    [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
 
+   wkt="$( opensearch-client "$inputfile" wkt | tail -1 )"
+   ciop-log "DEBUG" "wkt is $wkt"
    # the centroid R script get the WKT footprint and calculates the geometry centroid
-   pts=`centroid "$inputfile"`
+   pts=`centroid "$wkt"`
    lon=`echo $pts | cut -d " " -f 1`
    lat=`echo $pts | cut -d " " -f 2`
-
+   ciop-log "DEBUG" "centroid finished"
   # GMTSAR
   [ "$flag" == "true" ] && {
     # invoke make_dem.csh
@@ -76,7 +83,7 @@ do
 #    lat2=$( echo "$lat + 1.5" | bc )
 
     #using the new mbr R script to generate the bbox to extend
-    bbox=$( mbr "$inputfile" )
+    bbox=$( mbr "$wkt" )
     lon1=$( echo "$( echo "$bbox" | cut -d "," -f 1 ) -1.5" | bc | cut -d "." -f 1 )
     lon2=$( echo "$( echo "$bbox" | cut -d "," -f 2 ) +1.5" | bc | cut -d "." -f 1 )
     lat1=$( echo "$( echo "$bbox" | cut -d "," -f 3 ) -1.5" | bc | cut -d "." -f 1 )

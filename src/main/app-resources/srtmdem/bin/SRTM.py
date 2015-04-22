@@ -5,8 +5,11 @@
 
 
 import Image,sys,os,glob,getopt,scipy.misc,time
+import matplotlib
 from pylab import *
 from string import join
+
+matplotlib.use('agg')
 
 def usage():
   sys.exit("""
