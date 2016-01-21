@@ -15,7 +15,7 @@ To deploy the application on a Developer Sandbox:
 .. code-block:: console
 
   cd ~
-  git clone git@github.com:Terradue/srtm-dem.git
+  git clone https://github.com/Terradue/srtm-dem.git
   cd srtm-dem
   mvn install
   
