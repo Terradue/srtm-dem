@@ -6,7 +6,7 @@
   <packaging>rpm</packaging>
   <name>srtm-dem</name>
   <description>Digital elevation model generation to use with ROI_PAC, GAMMA and GMTSAR Synthetic Aperture Radar interferometry toolboxes</description>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <scm>
     <connection>scm:git:git@github.com:Terradue/srtm-dem.git</connection>
     <developerConnection>scm:git:git@github.com:Terradue/srtm-dem.git</developerConnection>
