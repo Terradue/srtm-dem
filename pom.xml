@@ -5,6 +5,11 @@
   <artifactId>srtm-dem</artifactId>
   <packaging>rpm</packaging>
   <name>srtm-dem</name>
+  <parent>
+    <groupId>com.terradue</groupId>
+    <artifactId>dcs-parent</artifactId>
+    <version>1</version>
+  </parent>
   <description>Digital elevation model generation to use with ROI_PAC, GAMMA and GMTSAR Synthetic Aperture Radar interferometry toolboxes</description>
   <version>1.3-SNAPSHOT</version>
   <scm>
