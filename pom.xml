@@ -110,7 +110,6 @@
           <defaultGroupname>ciop</defaultGroupname>
           <prefix>/application</prefix>
           <autoRequires>true</autoRequires>
-          <release>ciop</release>
           <mappings>
             <mapping>
               <directory>/application</directory>
@@ -204,7 +203,7 @@
             <configuration>
               <releaseName>v${project.version}</releaseName>
               <tag>v${project.version}</tag>
-              <artifact>${project.build.directory}/rpm/${project.artifactId}/RPMS/noarch/${project.artifactId}-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}-ciop.noarch.rpm</artifact>
+              <artifact>${project.build.directory}/rpm/${project.artifactId}/RPMS/noarch/${project.artifactId}-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.noarch.rpm</artifact>
               <overwriteArtifact>true</overwriteArtifact>
             </configuration>
           </execution>
