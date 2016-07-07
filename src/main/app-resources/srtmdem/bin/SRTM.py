@@ -343,7 +343,4 @@ if __name__=="__main__":
     print "\tSaving "+srtm.name+".dem to ROI-PAC format..."
     srtm.data = srtm.data.astype(int16)
     srtm.roi_header()
-  srtm.save_SRTM()  
-
-  
-  
+  srtm.save_SRTM()

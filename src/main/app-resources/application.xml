@@ -4,8 +4,7 @@
     <jobTemplate id="srtmdem">
       <streamingExecutable>/application/srtmdem/run.sh</streamingExecutable>
       <defaultParameters>
-        <parameter id="format" title="Format of the generated DEM (roi_pac or gamma)" abstract="Format of the generated DEM, the value is roi_pac or gamma" scope="runtime" type="LiteralData">gamma</parameter>
-        <parameter id="wkt" title="Geometry in WKT format" abstract="Geometry for the query Well Known Format" scope="runtime" type="LiteralData"></parameter>
+        <parameter id="wkt" title="Geometry in WKT format" abstract="Geometry for the query in Well Known Format" scope="runtime" type="LiteralData"/>
       </defaultParameters>
       <defaultJobconf>
         <property id="mapred.task.timeout">9900000000</property>
@@ -16,11 +15,11 @@
   <workflow id="srtmdem" title="SRTM Digital Elevation Model" abstract="This application generates the STRM DEM in ROI_PAC or GAMMA ready format">
     <workflowVersion>1.0</workflowVersion>
     <node id="node_srtmdem">
-      <job id="srtmdem" />
+      <job id="srtmdem"/>
       <sources>
         <source id="dummy" refid="string:list">dummy</source>
       </sources>
-      <parameters />
+      <parameters/>
     </node>
   </workflow>
 </application>

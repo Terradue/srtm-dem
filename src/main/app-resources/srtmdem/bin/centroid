@@ -6,12 +6,9 @@ library("rciop")
 # load the rgeos package silently
 suppressMessages(library(rgeos))
 
-# read the catalogue dataset entry
 args <- commandArgs(trailingOnly = TRUE)
-#dataset <- args[1]
 
 # extract the dct:spatial metadata field (WKT footprint)
-#wkt <- rciop.casmeta("dct:spatial", dataset)$output
 wkt <- args[1]
 
 # get the centroid
