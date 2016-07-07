@@ -5,9 +5,11 @@
       <streamingExecutable>/application/srtmdem/run.sh</streamingExecutable>
       <defaultParameters>
         <parameter id="format" title="Format of the generated DEM (roi_pac or gamma)" abstract="Format of the generated DEM, the value is roi_pac or gamma" scope="runtime" type="LiteralData">gamma</parameter>
+        <parameter id="wkt" title="Geometry in WKT format" abstract="Geometry for the query Well Known Format" scope="runtime" type="LiteralData"></parameter>
       </defaultParameters>
       <defaultJobconf>
         <property id="mapred.task.timeout">9900000000</property>
+        <property id="ciop.job.max.tasks">1</property>
       </defaultJobconf>
     </jobTemplate>
   </jobTemplates>
@@ -16,7 +18,7 @@
     <node id="node_srtmdem">
       <job id="srtmdem" />
       <sources>
-        <source id="Level0_ref" title="SAR product catalogue entry(ies) in RDF format" abstract="Define the list of one or more SAR products to generate a DEM for each input product. The products are passed by references to catalogue entries in RDF format" refid="string:list" scope="runtime">http://eo-virtual-archive4.esa.int/search/ASA_IM__0P/ASA_IM__0CNPAM20100818_204734_000000172092_00129_44271_5241.N1/rdf</source>
+        <source id="dummy" refid="string:list">dummy</source>
       </sources>
       <parameters />
     </node>
