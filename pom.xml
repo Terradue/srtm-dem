@@ -144,7 +144,7 @@
             <require>pygtk2</require>
             <require>python-matplotlib</require>
             <require>python-imaging</require>
-            <require>rciop</require>
+            <require>miniconda-3.8.3</require>
           </requires>
           <needarch>noarch</needarch>
           <postinstallScriptlet>

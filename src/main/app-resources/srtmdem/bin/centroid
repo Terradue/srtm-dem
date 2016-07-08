@@ -1,18 +1,8 @@
-#!/usr/bin/Rscript --vanilla --slave --quiet
+#!/opt/anaconda/bin/python
 
-# load the rciop package
-#library("rciop")
+from shapely.wkt import loads as load_wkt
+import sys
 
-# load the rgeos package silently
-suppressMessages(library(rgeos))
-
-args <- commandArgs(trailingOnly = TRUE)
-
-# extract the dct:spatial metadata field (WKT footprint)
-wkt <- args[1]
-
-# get the centroid
-centroid <- gCentroid(readWKT(wkt))
-
-# print it to the stdout
-cat(paste(centroid@coords[1], centroid@coords[2], sep=" "))
+wkt = sys.argv[1]
+p   = load_wkt(wkt)
+print "%s %s" % (p.centroid.x, p.centroid.y)
