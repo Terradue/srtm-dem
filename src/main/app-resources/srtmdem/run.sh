@@ -46,17 +46,17 @@ do
   
   ciop-log "DEBUG" "wkt is ${wkt}"
 
-  # the centroid R script get the WKT footprint and calculates the
+  # the centroid script get the WKT footprint and calculates the
   # geometry centroid
   pts=$( centroid "${wkt}" )
   lon=$( echo ${pts} | cut -d " " -f 1 )
   lat=$( echo ${pts} | cut -d " " -f 2 )
 
-  ciop-log "DEBUG" "centroid finished: ${lon} ${lat}"
+  ciop-log "DEBUG" "centroid script finished: ${lon} ${lat}"
 
   ciop-log "INFO" "Generating DEM"
 
-  # invoke the SRTM.py
+  # Invoke the SRTM.py
   SRTM.py ${lat} ${lon} ${UUIDTMP}/${dem_name} -D /data/SRTM41/ ${option} 1>&2
   [ ! -e ${UUIDTMP}/${dem_name}.dem ] && exit ${ERR_NODEM}
 

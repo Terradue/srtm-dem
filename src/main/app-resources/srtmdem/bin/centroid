@@ -4,5 +4,6 @@ from shapely.wkt import loads as load_wkt
 import sys
 
 wkt = sys.argv[1]
-p   = load_wkt(wkt)
+p = load_wkt(wkt)
+
 print "%s %s" % (p.centroid.x, p.centroid.y)
