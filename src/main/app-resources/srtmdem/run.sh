@@ -52,7 +52,7 @@ do
   lon=$( echo ${pts} | cut -d " " -f 1 )
   lat=$( echo ${pts} | cut -d " " -f 2 )
 
-  ciop-log "DEBUG" "centroid finished"
+  ciop-log "DEBUG" "centroid finished: ${lon} ${lat}"
 
   ciop-log "INFO" "Generating DEM"
 
