@@ -211,10 +211,10 @@ datum_country_list Global Definition, WGS84, World
  
 def get_needed_zipfiles(lat,lon):
   # getting four corners (delta = 1 deg from lat/lon)
-  north = lat + 1
-  south = lat - 1
-  east  = lon - 1
-  west  = lon + 1
+  north = lat + 0.5
+  south = lat - 0.5
+  east  = lon - 0.5
+  west  = lon + 0.5
   #getting needed tile indeces
   te = str(int(east+180)/5+1).zfill(2)
   tw = str(int(west+180)/5+1).zfill(2)
