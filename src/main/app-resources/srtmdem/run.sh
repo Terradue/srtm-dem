@@ -61,7 +61,6 @@ do
 
    ciop-log "INFO" "Working on $inputfile in $UUIDTMP" 
 
-   #dem_name=`ciop-casmeta -f "dc:identifier" "$inputfile"`
    dem_name=`uuidgen`
    [ -z "$dem_name" ] && exit $ERR_NOIDENTIFIER 
 
